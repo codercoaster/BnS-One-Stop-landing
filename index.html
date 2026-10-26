@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>B&amp;S One Stop — Best Hot Dogs in Town</title>
+  <meta name="description" content="Homemade chilli, all-beef hot dogs and warm buttered buns. B&amp;S One Stop — 1823 Superior St, Columbia, SC.">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M8 50 4 18l16 14L32 8l12 24 16-14-4 32z' fill='%23E8B23A'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Anton&family=Inter:wght@400;500;700&family=Kaushan+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="is-loading">
+
+  <!-- Reusable crown -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#FFE08A"/>
+        <stop offset=".55" stop-color="#E8B23A"/>
+        <stop offset="1" stop-color="#A86B12"/>
+      </linearGradient>
+      <symbol id="crown" viewBox="0 0 120 80">
+        <path class="crown-body" d="M14 66 6 22l28 22L60 8l26 36 28-22-8 44Z"/>
+        <path class="crown-band" d="M16 66h88v8H16z"/>
+        <circle class="crown-gem" cx="6" cy="20" r="5"/>
+        <circle class="crown-gem" cx="60" cy="7" r="6"/>
+        <circle class="crown-gem" cx="114" cy="20" r="5"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- Preloader -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <svg class="loader__crown" viewBox="0 0 120 80">
+        <path d="M14 66 6 22l28 22L60 8l26 36 28-22-8 44Z"/>
+        <path d="M16 70h88"/>
+      </svg>
+      <p class="loader__word"><span>B&amp;S</span> One Stop</p>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <a class="brand" href="#top" aria-label="B&amp;S One Stop — home">
+      <svg class="brand__crown"><use href="#crown"/></svg>
+      <span class="brand__text"><b>B&amp;S</b> One Stop</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#chilli">Chilli</a>
+      <a href="#menu">Menu</a>
+      <a class="nav__stand" href="#stand" hidden>From the Stand</a>
+      <a href="#visit">Visit</a>
+    </nav>
+    <a class="btn btn--sm btn--fire" href="tel:+18032509977">Call now</a>
+  </header>
+
+  <main id="top">
+
+    <!-- Hero -->
+    <section class="hero">
+      <canvas class="embers" aria-hidden="true"></canvas>
+      <div class="hero__glow" aria-hidden="true"></div>
+
+      <div class="hero__stage">
+        <p class="hero__script">Best Hot Dogs in Town!</p>
+        <svg class="hero__squiggle" viewBox="0 0 560 120" aria-hidden="true">
+          <path d="M10 70c40-60 80-60 110 0s70 60 110 0 70-60 110 0 70 60 110 0 60-50 100-20"/>
+        </svg>
+        <div class="hero__lockup">
+          <h1 class="hero__title">
+            <span class="hero__line hero__line--a">B&amp;S</span>
+            <span class="hero__line hero__line--b">One Stop</span>
+          </h1>
+
+          <div class="hero__dog">
+            <img src="assets/img/chili-dog.png" alt="" width="667" height="1000">
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Ticker -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track">
+        <span>Homemade Chilli</span><svg><use href="#crown"/></svg>
+        <span>All-Beef Hot Dogs</span><svg><use href="#crown"/></svg>
+        <span>Warm Buttered Buns</span><svg><use href="#crown"/></svg>
+        <span>Hotdog Capital</span><svg><use href="#crown"/></svg>
+      </div>
+    </div>
+
+    <!-- Trinity -->
+    <section class="trinity" id="chilli" aria-label="What we serve">
+      <div class="trinity__intro">
+        <p class="eyebrow">The holy trinity</p>
+        <h2 class="split-lines">Three things.<br>Done right.</h2>
+      </div>
+
+      <div class="trinity__pin">
+        <article class="panel panel--red">
+          <span class="panel__num">01</span>
+          <svg class="panel__icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M32 58c-11 0-19-8-19-18 0-9 6-14 9-21 2 5 5 7 7 7-1-9 3-16 9-20-1 8 6 13 9 19 3 6 4 10 4 15 0 10-8 18-19 18Z"/>
+            <path d="M32 58c-5 0-8-4-8-8 0-5 4-7 5-11 2 3 4 4 6 4 1 2 5 4 5 8 0 4-3 7-8 7Z"/>
+          </svg>
+          <h3>Homemade<br>Chilli</h3>
+          <p>Made in-house and ladled on thick — the rich, meaty heart of every chili dog that leaves our counter.</p>
+        </article>
+
+        <article class="panel panel--ember">
+          <span class="panel__num">02</span>
+          <svg class="panel__icon" viewBox="0 0 64 64" aria-hidden="true">
+            <rect x="6" y="24" width="52" height="16" rx="8"/>
+            <path d="M16 28c3 3 6 3 9 0s6-3 9 0 6 3 9 0 6-3 7-1"/>
+          </svg>
+          <h3>All-Beef<br>Hot Dogs</h3>
+          <p>All beef, the real deal. Big flavor in every bite and the perfect base for whatever you pile on top.</p>
+        </article>
+
+        <article class="panel panel--mustard">
+          <span class="panel__num">03</span>
+          <svg class="panel__icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M6 30c0-6 5-10 10-10h32c5 0 10 4 10 10v2c0 8-6 14-14 14H20C12 46 6 40 6 32Z"/>
+            <path d="M12 30h40"/>
+            <path d="M22 12c-2 2 2 4 0 6M32 10c-2 2 2 4 0 6M42 12c-2 2 2 4 0 6"/>
+          </svg>
+          <h3>Warm Buttered<br>Buns</h3>
+          <p>Soft, warm and buttered — the golden finish that holds it all together, bite after bite.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Menu -->
+    <section class="menu" id="menu" aria-label="Menu">
+      <img class="menu__deco menu__deco--a" src="assets/img/chili-slaw-dog.png" alt="" aria-hidden="true" loading="lazy" width="667" height="1000">
+      <img class="menu__deco menu__deco--b" src="assets/img/loaded-dog.png" alt="" aria-hidden="true" loading="lazy" width="667" height="1000">
+      <img class="menu__deco menu__deco--c" src="assets/img/chili-cheese-fries.png" alt="" aria-hidden="true" loading="lazy" width="855" height="900">
+
+      <div class="menu__head">
+        <p class="eyebrow">The menu</p>
+        <h2 class="split-lines">Legendary<br><em>hot dogs.</em></h2>
+      </div>
+
+      <div class="menu__board">
+        <div class="menu__col">
+          <div class="menu__cat">
+            <h3>Dogs</h3>
+            <p class="menu__tag">Legendary Hot Dog Creations</p>
+            <ul class="menu__list">
+              <li class="item">
+                <div class="item__row"><span class="item__name">Chili Dog</span><span class="item__dots"></span><span class="item__price">$4.00</span></div>
+                <p class="item__desc">The classic! Chili, mustard, onion, ketchup — perfection in a bun!</p>
+              </li>
+              <li class="item">
+                <div class="item__row"><span class="item__name">Chili &amp; Cheese Dog</span><span class="item__dots"></span><span class="item__price">$4.75</span></div>
+                <p class="item__desc">The upgrade: smothered in chili and cheesy goodness!</p>
+              </li>
+              <li class="item">
+                <div class="item__row"><span class="item__name">Sausage Dog</span><span class="item__dots"></span><span class="item__price">$5.00</span></div>
+                <p class="item__desc">Big, bold, and delicious! Chili, ketchup, mustard, and onion.</p>
+              </li>
+              <li class="item">
+                <div class="item__row"><span class="item__name">Fried Hot Dog</span><span class="item__dots"></span><span class="item__price">$4.50</span></div>
+                <p class="item__desc">Sizzle &amp; crunch! Fried, chili, ketchup, mustard, and onion.</p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="menu__cat">
+            <h3>Specialty Dogs</h3>
+            <p class="menu__tag">Flavor Adventure!</p>
+            <ul class="menu__list">
+              <li class="item">
+                <div class="item__row"><span class="item__name">Pickle Dog</span><span class="item__dots"></span><span class="item__price">$4.75</span></div>
+                <p class="item__desc">Tangy, crunchy, and downright tasty! Pickles, chili, ketchup, mustard, and onion.</p>
+              </li>
+              <li class="item">
+                <div class="item__row"><span class="item__name">Kraut Dog</span><span class="item__dots"></span><span class="item__price">$4.75</span></div>
+                <p class="item__desc">A tangy twist! Sauerkraut, chili, ketchup, mustard, onion.</p>
+              </li>
+              <li class="item">
+                <div class="item__row"><span class="item__name">LA Dog</span><span class="item__dots"></span><span class="item__price">$4.50</span></div>
+                <p class="item__desc">A west coast favorite — bacon, chili, ketchup, mustard, onion.</p>
+              </li>
+              <li class="item">
+                <div class="item__row"><span class="item__name">Corn Dog</span><span class="item__dots"></span><span class="item__price">$2.50</span></div>
+                <p class="item__desc">Fairground vibes with chili &amp; cheese!</p>
+              </li>
+              <li class="item">
+                <div class="item__row"><span class="item__name">Southern Dog</span><span class="item__dots"></span><span class="item__price">$4.75</span></div>
+                <p class="item__desc">Home-style comfort — slaw, chili, ketchup, mustard, onion.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="menu__col">
+          <div class="menu__cat">
+            <h3>Sides</h3>
+            <p class="menu__tag">No Dog Left Behind!</p>
+            <ul class="menu__list">
+              <li class="item">
+                <div class="item__row"><span class="item__name">Fries</span><span class="item__dots"></span><span class="item__price">$3.25</span></div>
+              </li>
+              <li class="item">
+                <div class="item__row"><span class="item__name">Chili Cheese Fries</span><span class="item__dots"></span><span class="item__price">$3.75</span></div>
+              </li>
+              <li class="item">
+                <div class="item__row"><span class="item__name">Nachos</span><span class="item__dots"></span><span class="item__price">$4.25</span></div>
+                <p class="item__desc">Smothered with chili &amp; cheese — pure joy!</p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="menu__cat">
+            <h3>Extras</h3>
+            <p class="menu__tag">Because You Deserve It!</p>
+            <div class="combo">
+              <svg class="combo__crown" aria-hidden="true"><use href="#crown"/></svg>
+              <p class="combo__label">Meal deal</p>
+              <div class="combo__row">
+                <span class="combo__name">Chili Dog Basket</span>
+                <span class="combo__price">$10.25</span>
+              </div>
+              <p class="combo__desc">Chili dog, fries &amp; drink — your perfect meal deal!</p>
+            </div>
+            <ul class="menu__list">
+              <li class="item">
+                <div class="item__row"><span class="item__name">Additional Toppings</span><span class="item__dots"></span><span class="item__price">$1.25</span></div>
+                <p class="item__desc">Build your dream dog!</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu__foot">
+        <a class="btn btn--fire" href="tel:+18032509977">Call-ahead orders · 803-250-9977</a>
+        <p>Tax not included.</p>
+      </div>
+    </section>
+
+    <!-- From the Stand: add one <article class="reel" data-reel="URL"></article> per Facebook / Instagram reel.
+         The section stays hidden while there are no reels. -->
+    <section class="stand" id="stand" aria-label="From the Stand" hidden>
+      <div class="stand__viewport">
+        <div class="stand__track">
+          <div class="stand__head">
+            <p class="eyebrow">From the stand</p>
+            <h2 class="split-lines">Straight from<br><em>the stand.</em></h2>
+            <p class="stand__hint">Real dogs, real Columbia. Tap a reel to watch.</p>
+          </div>
+
+          <article class="reel" data-reel="https://www.facebook.com/reel/1496944032108184"></article>
+          <article class="reel" data-reel="https://www.facebook.com/reel/1625763635403324"></article>
+          <article class="reel" data-reel="https://www.facebook.com/reel/960404756617520"></article>
+          <article class="reel" data-reel="https://www.facebook.com/reel/1218049740483960"></article>
+          <article class="reel" data-reel="https://www.facebook.com/reel/885719624376188"></article>
+          <article class="reel" data-reel="https://www.facebook.com/reel/1375924867000655"></article>
+          <article class="reel" data-reel="https://www.facebook.com/reel/1397617765147789"></article>
+
+          <a class="reel reel--cta" href="https://www.facebook.com/profile.php?id=61586492886352" target="_blank" rel="noopener">
+            <span class="reel__media">
+              <svg class="reel__crown" aria-hidden="true"><use href="#crown"/></svg>
+              <span class="reel__cta-text">More on<br>Facebook</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Capital -->
+    <section class="capital" aria-label="Hotdog Capital">
+      <svg class="capital__crown" aria-hidden="true"><use href="#crown"/></svg>
+      <p class="capital__ribbon">Hotdog Capital</p>
+      <h2 class="capital__statement">
+        Columbia has plenty of places to eat. Only one gets to wear the crown.
+      </h2>
+    </section>
+
+    <!-- Visit -->
+    <section class="visit" id="visit" aria-label="Visit us">
+      <div class="visit__board">
+        <p class="visit__script">Best<br><span>Hot Dogs</span><br>in Town!</p>
+        <a class="visit__arrow" href="https://www.google.com/maps/dir/?api=1&amp;destination=1823+Superior+St+Columbia+SC+29205" target="_blank" rel="noopener">
+          <svg viewBox="0 0 60 60" aria-hidden="true"><path d="M58 18H26V2L2 30l24 28V42h32z"/></svg>
+          <span>1823 Superior St.</span>
+        </a>
+      </div>
+
+      <div class="visit__grid">
+        <div class="visit__info">
+          <h2>Come hungry.</h2>
+          <dl>
+            <div><dt>Address</dt><dd>1823 Superior St<br>Columbia, SC 29205</dd></div>
+            <div><dt>Phone</dt><dd><a href="tel:+18032509977">+1 803-250-9977</a><br>Call-ahead orders accepted</dd></div>
+            <div><dt>Email</dt><dd><a href="mailto:besthotdogintown1823@gmail.com">besthotdogintown1823@gmail.com</a></dd></div>
+          </dl>
+          <div class="visit__ctas">
+            <a class="btn btn--fire" href="https://www.google.com/maps/dir/?api=1&amp;destination=1823+Superior+St+Columbia+SC+29205" target="_blank" rel="noopener">Get directions</a>
+            <a class="btn btn--ghost" href="tel:+18032509977">Call</a>
+            <a class="btn btn--ghost" href="https://www.facebook.com/profile.php?id=61586492886352" target="_blank" rel="noopener">Facebook</a>
+          </div>
+        </div>
+        <div class="visit__map">
+          <iframe title="Map to B&amp;S One Stop, 1823 Superior St, Columbia SC" src="https://www.google.com/maps?q=1823+Superior+St,+Columbia,+SC+29205&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <svg class="footer__crown" aria-hidden="true"><use href="#crown"/></svg>
+    <p class="footer__word"><b>B&amp;S</b> One Stop</p>
+    <p class="footer__script">Best Hot Dogs in Town</p>
+    <p class="footer__meta">1823 Superior St, Columbia, SC 29205 · <a href="tel:+18032509977">+1 803-250-9977</a></p>
+    <p class="footer__copy">© <span class="year"></span> B&amp;S One Stop Best Hot Dog In Town LLC</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

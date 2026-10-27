@@ -276,8 +276,8 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   z-index: 4;
   overflow: hidden;
   padding: 1.1rem 0;
-  background: var(--red);
-  border-block: 3px solid var(--mustard);
+  background: var(--black);
+  border-block: 3px solid var(--red);
   transform: rotate(-2deg);
   /* rises over the bottom of the hero so its gradient runs under the ticker */
   margin: -3.5rem -2vw 1.5rem;

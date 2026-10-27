@@ -62,9 +62,9 @@ h1, h2, h3, p { margin: 0; }
 ::selection { background: var(--red); color: #fff; }
 
 /* crown symbol paint */
+.crown-body, .crown-band { stroke: var(--gold); stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
 .crown-body { fill: url(#goldGrad); }
-.crown-band { fill: #C98E1E; }
-.crown-gem { fill: var(--red); stroke: #FFE08A; stroke-width: 2; }
+.crown-band { fill: none; }
 
 .eyebrow {
   font-family: var(--f-slab);
@@ -197,7 +197,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   z-index: 1;
   isolation: isolate;
   width: clamp(260px, min(59vw, 66svh), 720px);
-  /* room for the crowned dogs peeking over the logo */
+  /* room for the dogs peeking over the logo */
   margin: clamp(6rem, 30svh, 16rem) 0 0;
 }
 .hero__logo {
@@ -226,12 +226,15 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
 }
 .hero__hotdog--l { left: -19.5%; bottom: 28%; transform: rotate(-14deg); }
 .hero__hotdog--r { left: 70.5%; bottom: 28%; transform: rotate(14deg); }
-/* gold crown drawn on top of each dog */
+/* gold crown drawn tilted on the B's top-left corner.
+   Tilt via `rotate`, not transform: GSAP owns the crown's transform */
 .hero__crown {
   position: absolute;
-  left: 22%;
-  bottom: 98%;
-  width: 56%;
+  z-index: 2;
+  left: 23%;
+  bottom: 92%;
+  width: 20%;
+  rotate: -20deg;
   transform-origin: 50% 100%;
   overflow: visible;
   fill: url(#goldGrad);
@@ -242,11 +245,6 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   stroke-linecap: round;
   filter: drop-shadow(0 0 12px rgba(232, 178, 58, .6));
 }
-/* centred over each bun's tip: left edge = tip centre (measured from the PNGs) − half the crown width.
-   No CSS translate here, GSAP owns the crown's transform */
-.hero__hotdog--l .hero__crown { left: 23%; width: 52%; }
-.hero__hotdog--c .hero__crown { left: 22%; }
-.hero__hotdog--r .hero__crown { left: 28%; width: 52%; }
 .hero__script {
   position: relative;
   z-index: 3;
@@ -265,7 +263,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   .hero__stage { padding: 96px var(--gutter) calc(3.5rem + clamp(3rem, 6vw, 5rem)); }
   .hero__brand {
     width: 66vw;
-    /* tied to width: the crowned dogs scale with the logo, not the viewport height */
+    /* tied to width: the dogs scale with the logo, not the viewport height */
     margin-top: 44vw;
   }
 }
@@ -299,7 +297,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   color: #fff;
   white-space: nowrap;
 }
-.ticker svg { width: 46px; height: 32px; flex: none; }
+.ticker svg { width: 46px; height: 32px; flex: none; overflow: visible; }
 
 /* --------------------------------------------------------------------------
    Trinity
@@ -513,6 +511,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   right: 20px;
   width: 54px;
   height: 36px;
+  overflow: visible;
   transform: rotate(12deg);
 }
 .combo__label {
@@ -604,13 +603,11 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   border: 0;
 }
 .reel__play {
+  --play: 96px;
+  --play-nudge: 6px; /* FB's button sits slightly below the iframe's center */
   position: absolute;
   inset: 0;
   z-index: 2;
-  display: grid;
-  place-items: center;
-  align-content: center;
-  gap: 1rem;
   border: 0;
   cursor: pointer;
   color: var(--bun);
@@ -621,18 +618,30 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   background: linear-gradient(180deg, rgba(10, 10, 10, .15), rgba(10, 10, 10, .65));
   transition: background-color .3s ease;
 }
+/* circle sits dead center so it lines up with Facebook's own play button underneath */
 .reel__play::before {
   content: "";
-  width: 76px;
-  height: 76px;
+  position: absolute;
+  top: calc(50% + var(--play-nudge));
+  left: 50%;
+  width: var(--play);
+  height: var(--play);
+  margin: calc(var(--play) / -2) 0 0 calc(var(--play) / -2);
   border-radius: 50%;
   background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='%230A0A0A'/%3E%3C/svg%3E") center / 34px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='%230A0A0A'/%3E%3C/svg%3E") center / 42px no-repeat,
     var(--fire-x);
   box-shadow: 0 0 0 8px rgba(255, 90, 20, .2), 0 14px 40px -10px rgba(248, 8, 8, .9);
   transition: transform .3s ease;
 }
 .reel__play:hover::before { transform: scale(1.08); }
+.reel__play-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50% + var(--play-nudge) + var(--play) / 2 + 1rem);
+  text-align: center;
+}
 .reel__play:focus-visible { outline: 3px solid var(--mustard); outline-offset: -3px; }
 .reel__link {
   font-size: .85rem;
@@ -650,7 +659,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   align-content: center;
   gap: 1.25rem;
 }
-.reel__crown { width: 96px; height: 64px; }
+.reel__crown { width: 96px; height: 64px; overflow: visible; }
 .reel__cta-text {
   font-family: var(--f-display);
   font-size: 2.6rem;
@@ -677,7 +686,8 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
 @media (max-width: 899px) {
   .menu { padding-bottom: 3rem; }
   .stand { padding: 1.5rem 0 0; }
-  .reel__play::before { width: 60px; height: 60px; background-size: 28px, auto; }
+  .reel__play { --play: 80px; }
+  .reel__play::before { background-size: 36px, auto; }
   .reel__crown { width: 72px; height: 48px; }
   .reel__cta-text { font-size: 2rem; }
 }
@@ -703,6 +713,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   margin: 0 auto;
   width: clamp(120px, 16vw, 220px);
   height: clamp(80px, 11vw, 147px);
+  overflow: visible;
   filter: drop-shadow(0 0 30px rgba(232, 178, 58, .5));
 }
 .capital__ribbon {

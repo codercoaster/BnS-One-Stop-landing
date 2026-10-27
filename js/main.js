@@ -127,10 +127,10 @@
     // dogs rise from behind the logo and fan out to their CSS rotation
     tl.from(".hero__logo", { autoAlpha: 0, scale: 0.85, y: 30, duration: 0.7, ease: "back.out(1.6)" })
       .from(dogs, { yPercent: 60, rotation: 0, autoAlpha: 0, duration: 0.8, stagger: 0.1, ease: "back.out(1.7)" }, 0.3)
-      // then a gold crown draws itself on top of each one
+      // then a gold crown draws itself onto the logo
       .from(".hero__crown path", { drawSVG: 0, duration: 0.7, stagger: 0.08, ease: "power2.inOut" }, 0.9)
-      .to(".hero__crown", { fillOpacity: 1, duration: 0.35, stagger: 0.08 }, 1.45)
-      .from(".hero__crown", { scale: 1.25, duration: 0.5, stagger: 0.08, ease: "back.out(3)" }, 1.45)
+      .to(".hero__crown", { fillOpacity: 1, duration: 0.35 }, 1.45)
+      .from(".hero__crown", { scale: 1.25, duration: 0.5, ease: "back.out(3)" }, 1.45)
       .from(".hero__script", { autoAlpha: 0, y: 40, rotation: -14, duration: 0.9, ease: "back.out(2)" }, 0.7)
       .from(".header", { autoAlpha: 0, duration: 0.8 }, 0.9)
       .add(() => {
@@ -175,18 +175,17 @@
     const half = track.innerHTML.repeat(3);
     track.innerHTML = half + half;
 
-    const loop = gsap.to(track, { xPercent: -50, duration: 40, ease: "none", repeat: -1 });
-    loop.totalTime(loop.duration() * 1000); // room to run backwards
+    const loop = gsap.fromTo(track, { xPercent: -50 }, { xPercent: 0, duration: 40, ease: "none", repeat: -1 });
 
+    // scrolling only speeds it up, it always runs to the right
     let boostTl;
     ScrollTrigger.create({
       onUpdate(self) {
-        const dir = self.direction;
         const boost = 1 + Math.min(Math.abs(self.getVelocity()) / 250, 6);
         boostTl && boostTl.kill();
         boostTl = gsap.timeline()
-          .to(loop, { timeScale: dir * boost, duration: 0.2 })
-          .to(loop, { timeScale: dir, duration: 0.8 }, "+=0.15");
+          .to(loop, { timeScale: boost, duration: 0.2 })
+          .to(loop, { timeScale: 1, duration: 0.8 }, "+=0.15");
       },
     });
   }
@@ -292,7 +291,7 @@
       reel.dataset.title = `B&S One Stop reel ${i + 1} on ${info.site}`;
       reel.innerHTML = `
         <div class="reel__media">
-          <button class="reel__play" type="button" aria-label="Play reel ${i + 1}">Watch</button>
+          <button class="reel__play" type="button" aria-label="Play reel ${i + 1}"><span class="reel__play-label">Watch</span></button>
         </div>
         <a class="reel__link" href="${reel.dataset.reel}" target="_blank" rel="noopener">Open on ${info.site} ↗</a>`;
       // the overlay keeps wheel events on the page (smooth scroll) until the viewer opts in

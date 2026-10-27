@@ -6,7 +6,8 @@
   <title>B&amp;S One Stop — Best Hot Dogs in Town</title>
   <meta name="description" content="Homemade chilli, all-beef hot dogs and warm buttered buns. B&amp;S One Stop — 1823 Superior St, Columbia, SC.">
   <meta name="theme-color" content="#0A0A0A">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M8 50 4 18l16 14L32 8l12 24 16-14-4 32z' fill='%23E8B23A'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,27 +34,13 @@
     </defs>
   </svg>
 
-  <!-- Preloader -->
-  <div class="loader" aria-hidden="true">
-    <div class="loader__inner">
-      <svg class="loader__crown" viewBox="0 0 120 80">
-        <path d="M14 66 6 22l28 22L60 8l26 36 28-22-8 44Z"/>
-        <path d="M16 70h88"/>
-      </svg>
-      <p class="loader__word"><span>B&amp;S</span> One Stop</p>
-    </div>
-  </div>
-
   <!-- Header -->
   <header class="header">
     <a class="brand" href="#top" aria-label="B&amp;S One Stop — home">
-      <svg class="brand__crown"><use href="#crown"/></svg>
-      <span class="brand__text"><b>B&amp;S</b> One Stop</span>
+      <img class="brand__logo" src="assets/img/logo-sm.webp" alt="B&amp;S One Stop" width="360" height="196">
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="#chilli">Chilli</a>
       <a href="#menu">Menu</a>
-      <a class="nav__stand" href="#stand" hidden>From the Stand</a>
       <a href="#visit">Visit</a>
     </nav>
     <a class="btn btn--sm btn--fire" href="tel:+18032509977">Call now</a>
@@ -67,20 +54,24 @@
       <div class="hero__glow" aria-hidden="true"></div>
 
       <div class="hero__stage">
-        <p class="hero__script">Best Hot Dogs in Town!</p>
-        <svg class="hero__squiggle" viewBox="0 0 560 120" aria-hidden="true">
-          <path d="M10 70c40-60 80-60 110 0s70 60 110 0 70-60 110 0 70 60 110 0 60-50 100-20"/>
-        </svg>
-        <div class="hero__lockup">
-          <h1 class="hero__title">
-            <span class="hero__line hero__line--a">B&amp;S</span>
-            <span class="hero__line hero__line--b">One Stop</span>
-          </h1>
-
-          <div class="hero__dog">
-            <img src="assets/img/chili-dog.png" alt="" width="667" height="1000">
+        <h1 class="hero__brand">
+          <div class="hero__dogs" aria-hidden="true">
+            <div class="hero__hotdog hero__hotdog--l">
+              <svg class="hero__crown" viewBox="0 0 120 80"><path d="M14 66 6 22l28 22L60 8l26 36 28-22-8 44Z"/><path d="M16 70h88"/></svg>
+              <img src="assets/img/chili-dog.png" alt="" width="667" height="1000">
+            </div>
+            <div class="hero__hotdog hero__hotdog--c">
+              <svg class="hero__crown" viewBox="0 0 120 80"><path d="M14 66 6 22l28 22L60 8l26 36 28-22-8 44Z"/><path d="M16 70h88"/></svg>
+              <img src="assets/img/chili-slaw-dog.png" alt="" width="667" height="1000">
+            </div>
+            <div class="hero__hotdog hero__hotdog--r">
+              <svg class="hero__crown" viewBox="0 0 120 80"><path d="M14 66 6 22l28 22L60 8l26 36 28-22-8 44Z"/><path d="M16 70h88"/></svg>
+              <img src="assets/img/loaded-dog.png" alt="" width="667" height="1000">
+            </div>
           </div>
-        </div>
+          <img class="hero__logo" src="assets/img/logo.webp" alt="B&amp;S One Stop" width="1600" height="869" fetchpriority="high">
+        </h1>
+        <p class="hero__script">Best Hot Dogs in Town!</p>
       </div>
 
     </section>
@@ -106,8 +97,8 @@
         <article class="panel panel--red">
           <span class="panel__num">01</span>
           <svg class="panel__icon" viewBox="0 0 64 64" aria-hidden="true">
-            <path d="M32 58c-11 0-19-8-19-18 0-9 6-14 9-21 2 5 5 7 7 7-1-9 3-16 9-20-1 8 6 13 9 19 3 6 4 10 4 15 0 10-8 18-19 18Z"/>
-            <path d="M32 58c-5 0-8-4-8-8 0-5 4-7 5-11 2 3 4 4 6 4 1 2 5 4 5 8 0 4-3 7-8 7Z"/>
+            <path d="M32 56c-10 0-17-7-17-16 0-8 5-13 8-19 2 4 4 6 6 6-1-8 3-14 8-18-1 7 5 11 8 17 2 5 4 9 4 14 0 9-7 16-17 16Z"/>
+            <path d="M32 56c-4.5 0-7.5-3.5-7.5-7.5 0-4.5 3.5-6.5 4.5-10 2 2.5 4 3.5 5.5 3.5 1 2 4.5 3.5 4.5 7 0 4-3 7-7 7Z"/>
           </svg>
           <h3>Homemade<br>Chilli</h3>
           <p>Made in-house and ladled on thick — the rich, meaty heart of every chili dog that leaves our counter.</p>
@@ -116,8 +107,10 @@
         <article class="panel panel--ember">
           <span class="panel__num">02</span>
           <svg class="panel__icon" viewBox="0 0 64 64" aria-hidden="true">
-            <rect x="6" y="24" width="52" height="16" rx="8"/>
-            <path d="M16 28c3 3 6 3 9 0s6-3 9 0 6 3 9 0 6-3 7-1"/>
+            <g transform="rotate(-35 32 32)">
+              <rect x="4" y="25" width="56" height="14" rx="7"/>
+              <path d="M11 32c2.5-2.5 4.5 2.5 7 0s4.5 2.5 7 0 4.5 2.5 7 0 4.5 2.5 7 0 4.5 2.5 7 0 4.5 2.5 7 0"/>
+            </g>
           </svg>
           <h3>All-Beef<br>Hot Dogs</h3>
           <p>All beef, the real deal. Big flavor in every bite and the perfect base for whatever you pile on top.</p>
@@ -126,9 +119,9 @@
         <article class="panel panel--mustard">
           <span class="panel__num">03</span>
           <svg class="panel__icon" viewBox="0 0 64 64" aria-hidden="true">
-            <path d="M6 30c0-6 5-10 10-10h32c5 0 10 4 10 10v2c0 8-6 14-14 14H20C12 46 6 40 6 32Z"/>
-            <path d="M12 30h40"/>
-            <path d="M22 12c-2 2 2 4 0 6M32 10c-2 2 2 4 0 6M42 12c-2 2 2 4 0 6"/>
+            <rect x="6" y="30" width="52" height="22" rx="11"/>
+            <path d="M14 38c8 3 28 3 36 0"/>
+            <path d="M24 10c-3 3 3 6 0 10M32 8c-3 3 3 6 0 10M40 10c-3 3 3 6 0 10"/>
           </svg>
           <h3>Warm Buttered<br>Buns</h3>
           <p>Soft, warm and buttered — the golden finish that holds it all together, bite after bite.</p>
@@ -280,32 +273,35 @@
       <svg class="capital__crown" aria-hidden="true"><use href="#crown"/></svg>
       <p class="capital__ribbon">Hotdog Capital</p>
       <h2 class="capital__statement">
-        Columbia has plenty of places to eat. Only one gets to wear the crown.
+        Columbia has plenty of places to eat. Only one gets to <span class="capital__hot">wear the crown.</span>
       </h2>
     </section>
 
     <!-- Visit -->
     <section class="visit" id="visit" aria-label="Visit us">
       <div class="visit__board">
-        <p class="visit__script">Best<br><span>Hot Dogs</span><br>in Town!</p>
-        <a class="visit__arrow" href="https://www.google.com/maps/dir/?api=1&amp;destination=1823+Superior+St+Columbia+SC+29205" target="_blank" rel="noopener">
-          <svg viewBox="0 0 60 60" aria-hidden="true"><path d="M58 18H26V2L2 30l24 28V42h32z"/></svg>
-          <span>1823 Superior St.</span>
-        </a>
+        <img class="visit__dog" src="assets/img/chili-slaw-dog.png" alt="" width="666" height="1000" loading="lazy">
+        <p class="visit__script"><span class="visit__lift">Best<br><span>Hot Dogs</span><br>in Town!</span></p>
+        <div class="visit__sign">
+          <a class="visit__arrow" href="https://www.google.com/maps/dir/?api=1&amp;destination=1823+Superior+St+Columbia+SC+29205" target="_blank" rel="noopener">
+            <svg viewBox="0 0 60 60" aria-hidden="true"><path d="M58 18H26V2L2 30l24 28V42h32z"/></svg>
+            <span>1823 Superior St.</span>
+          </a>
+          <img class="visit__logo" src="assets/img/logo.webp" alt="B&amp;S One Stop" width="1600" height="869" loading="lazy">
+        </div>
       </div>
 
       <div class="visit__grid">
         <div class="visit__info">
           <h2>Come hungry.</h2>
           <dl>
-            <div><dt>Address</dt><dd>1823 Superior St<br>Columbia, SC 29205</dd></div>
-            <div><dt>Phone</dt><dd><a href="tel:+18032509977">+1 803-250-9977</a><br>Call-ahead orders accepted</dd></div>
+            <div><dt>Address</dt><dd>1823 Superior St, Columbia, SC 29205</dd></div>
+            <div><dt>Phone</dt><dd><a href="tel:+18032509977">+1 803-250-9977</a> · Call-ahead orders accepted</dd></div>
             <div><dt>Email</dt><dd><a href="mailto:besthotdogintown1823@gmail.com">besthotdogintown1823@gmail.com</a></dd></div>
           </dl>
           <div class="visit__ctas">
             <a class="btn btn--fire" href="https://www.google.com/maps/dir/?api=1&amp;destination=1823+Superior+St+Columbia+SC+29205" target="_blank" rel="noopener">Get directions</a>
-            <a class="btn btn--ghost" href="tel:+18032509977">Call</a>
-            <a class="btn btn--ghost" href="https://www.facebook.com/profile.php?id=61586492886352" target="_blank" rel="noopener">Facebook</a>
+            <a class="btn btn--fire" href="tel:+18032509977">Call</a>
           </div>
         </div>
         <div class="visit__map">
@@ -316,10 +312,13 @@
   </main>
 
   <footer class="footer">
-    <svg class="footer__crown" aria-hidden="true"><use href="#crown"/></svg>
-    <p class="footer__word"><b>B&amp;S</b> One Stop</p>
+    <img class="footer__logo" src="assets/img/logo.webp" alt="B&amp;S One Stop" width="1600" height="869" loading="lazy">
     <p class="footer__script">Best Hot Dogs in Town</p>
-    <p class="footer__meta">1823 Superior St, Columbia, SC 29205 · <a href="tel:+18032509977">+1 803-250-9977</a></p>
+    <p class="footer__meta">
+      <a href="https://www.google.com/maps/dir/?api=1&amp;destination=1823+Superior+St+Columbia+SC+29205" target="_blank" rel="noopener" aria-label="Directions: 1823 Superior St, Columbia, SC 29205"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a>
+      <a href="tel:+18032509977" aria-label="Call +1 803-250-9977"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24 11.36 11.36 0 0 0 3.58.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02z"/></svg></a>
+      <a href="https://www.facebook.com/profile.php?id=61586492886352" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.5h-2.8V24C19.62 23.1 24 18.1 24 12.07z"/></svg></a>
+    </p>
     <p class="footer__copy">© <span class="year"></span> B&amp;S One Stop Best Hot Dog In Town LLC</p>
   </footer>
 

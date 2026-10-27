@@ -4,7 +4,7 @@ Static landing page (mockup) for **B&S One Stop — Best Hot Dogs in Town**, 182
 
 - `index.html`, `css/styles.css`, `js/main.js` — no build step.
 - Animations: GSAP 3.13 (ScrollTrigger, SplitText, DrawSVG) + Lenis, loaded from jsDelivr.
-- Images: `assets/img/` (resized copies of the originals in `assets/images/`).
+- Images: `assets/img/` (resized copies of the originals in `assets/images/`, incl. `logo.webp`, `logo-sm.webp`, favicon and apple-touch icon from `B&S LOGO.png`).
 
 ## Run locally
 

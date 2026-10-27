@@ -40,8 +40,8 @@ body {
   line-height: 1.55;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
+  cursor: default;
 }
-body.is-loading { overflow: hidden; }
 
 /* film grain */
 body::after {
@@ -108,42 +108,8 @@ h1, h2, h3, p { margin: 0; }
 .btn--ghost:hover { border-color: var(--mustard); color: var(--mustard); }
 .btn:focus-visible, a:focus-visible { outline: 3px solid var(--mustard); outline-offset: 3px; }
 
-/* --------------------------------------------------------------------------
-   Loader
-   -------------------------------------------------------------------------- */
-.loader {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: grid;
-  place-items: center;
-  background: var(--black);
-}
-.loader__inner { text-align: center; }
-.loader__crown {
-  width: 120px;
-  overflow: visible;
-  fill: none;
-  stroke: var(--gold);
-  stroke-width: 3;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  filter: drop-shadow(0 0 12px rgba(232, 178, 58, .6));
-}
-.loader__word {
-  margin-top: 1rem;
-  font-family: var(--f-display);
-  font-size: clamp(2rem, 6vw, 3.4rem);
-  text-transform: uppercase;
-  letter-spacing: .04em;
-  color: var(--bun);
-}
-.loader__word span {
-  background: var(--fire);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+/* hidden until the hero intro reveals them */
+body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; }
 
 /* --------------------------------------------------------------------------
    Header
@@ -165,14 +131,7 @@ h1, h2, h3, p { margin: 0; }
   text-decoration: none;
   margin-right: auto;
 }
-.brand__crown { width: 34px; height: 24px; }
-.brand__text {
-  font-family: var(--f-display);
-  font-size: 1.35rem;
-  text-transform: uppercase;
-  letter-spacing: .03em;
-}
-.brand__text b { color: var(--red); font-weight: 400; }
+.brand__logo { width: auto; height: 44px; }
 .nav { display: flex; gap: 1.75rem; }
 .nav a {
   position: relative;
@@ -233,9 +192,65 @@ h1, h2, h3, p { margin: 0; }
   padding: 108px var(--gutter) 5rem;
   text-align: center;
 }
+.hero__brand {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  width: clamp(260px, min(59vw, 66svh), 720px);
+  /* room for the crowned dogs peeking over the logo */
+  margin: clamp(6rem, 30svh, 16rem) 0 0;
+}
+.hero__logo {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, .6)) drop-shadow(0 0 50px rgba(237, 47, 14, .35));
+}
+/* three dogs fanned out behind the logo, like a hand of cards */
+.hero__dogs {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero__hotdog {
+  position: absolute;
+  left: 25.5%;
+  bottom: 40%;
+  width: 49%;
+  transform-origin: 50% 50%;
+}
+.hero__hotdog img {
+  width: 100%;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, .6)) drop-shadow(0 0 30px rgba(255, 106, 19, .3));
+}
+.hero__hotdog--l { left: -19.5%; bottom: 28%; transform: rotate(-14deg); }
+.hero__hotdog--r { left: 70.5%; bottom: 28%; transform: rotate(14deg); }
+/* gold crown drawn on top of each dog */
+.hero__crown {
+  position: absolute;
+  left: 50%;
+  bottom: 98%;
+  width: 56%;
+  translate: -50% 0;
+  transform-origin: 50% 100%;
+  overflow: visible;
+  fill: url(#goldGrad);
+  fill-opacity: 0;
+  stroke: var(--gold);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 12px rgba(232, 178, 58, .6));
+}
+/* centred over each bun's tip; side crowns tilt with their dog, nudged inward so they sit on the tip */
+.hero__hotdog--l .hero__crown { left: 50%; width: 52%; }
+.hero__hotdog--c .hero__crown { left: 50.4%; }
+.hero__hotdog--r .hero__crown { left: 53%; width: 52%; }
 .hero__script {
   position: relative;
   z-index: 3;
+  margin-top: clamp(-1rem, -1svh, 0rem);
   font-family: var(--f-script);
   font-size: clamp(1.6rem, min(5vw, 6.5svh), 4rem);
   line-height: 1.15;
@@ -243,75 +258,10 @@ h1, h2, h3, p { margin: 0; }
   transform: rotate(-5deg);
   text-shadow: 0 4px 0 var(--red-deep), 0 0 30px rgba(237, 47, 14, .6);
 }
-.hero__squiggle {
-  position: relative;
-  z-index: 3;
-  width: clamp(140px, min(26vw, 36svh), 360px);
-  margin: .2rem 0 clamp(.75rem, 2.5svh, 2rem);
-  overflow: visible;
-  fill: none;
-  stroke: var(--mustard);
-  stroke-width: 14;
-  stroke-linecap: round;
-  filter: drop-shadow(0 3px 0 #c58a00);
-}
-.hero__title {
-  position: relative;
-  z-index: 1;
-  font-family: var(--f-display);
-  font-weight: 400;
-  text-transform: uppercase;
-  line-height: .84;
-  letter-spacing: -.01em;
-}
-.hero__line {
-  display: block;
-  white-space: nowrap;
-  background: var(--fire);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.hero__line:has(.char) { background: none; }
-.hero__line .char {
-  background: var(--fire);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  padding: .12em 0;
-  margin: -.12em 0;
-}
-/* no trailing tracking, so each line centres on its glyphs */
-.hero__line .char:last-child { letter-spacing: 0; }
-.hero__lockup {
-  --dog-w: clamp(130px, min(17vw, 23svh), 280px);
-  --size-a: clamp(5.5rem, min(17vw, 24svh), 16rem);
-  --size-b: clamp(3.4rem, min(11vw, 15svh), 10rem);
-  --gap: calc(var(--dog-w) * .85);
-  position: relative;
-}
-.hero__title { display: grid; row-gap: var(--gap); }
-.hero__line--a { font-size: var(--size-a); }
-.hero__line--b { font-size: var(--size-b); }
-
-.hero__dog {
-  position: absolute;
-  left: 50%;
-  top: calc(var(--size-a) * .84 + var(--gap) / 2);
-  z-index: 2;
-  width: var(--dog-w);
-  margin: calc(var(--dog-w) * -.75) 0 0 calc(var(--dog-w) / -2);
-  pointer-events: none;
-}
-.hero__dog img {
-  transform: rotate(-90deg);
-  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .65)) drop-shadow(0 0 40px rgba(255, 106, 19, .35));
-}
 
 @media (max-width: 720px) {
   .hero__stage { padding-top: 104px; }
-  .hero__lockup { --dog-w: 40vw; --size-a: 34vw; --size-b: 20vw; }
+  .hero__brand { width: 66vw; }
 }
 
 /* --------------------------------------------------------------------------
@@ -418,22 +368,21 @@ h1, h2, h3, p { margin: 0; }
 }
 
 @media (min-width: 900px) {
+  /* panels share the parent's rows (subgrid) so titles and copy line up across cards */
   .trinity__pin {
-    display: block;
-    height: 100svh;
-    padding: 90px var(--gutter) var(--gutter);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto 1fr auto auto;
   }
   .panel {
-    position: absolute;
-    inset: 90px var(--gutter) var(--gutter);
-    min-height: 0;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto 1fr auto;
-    column-gap: 3rem;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+    min-height: clamp(26rem, 38vw, 34rem);
+    padding: clamp(1.5rem, 2.5vw, 2.5rem);
   }
-  .panel__icon { grid-column: 1; grid-row: 1; }
-  .panel h3 { grid-column: 1 / -1; grid-row: 3; align-self: end; }
-  .panel p { grid-column: 2; grid-row: 1; justify-self: end; text-align: right; }
+  .panel__icon { grid-row: 1; }
+  .panel h3 { grid-row: 3; font-size: clamp(2.5rem, 4.4vw, 4.75rem); }
+  .panel p { grid-row: 4; font-size: clamp(.95rem, 1.1vw, 1.1rem); }
+  .panel__num { font-size: clamp(8rem, 15vw, 15rem); }
 }
 
 /* --------------------------------------------------------------------------
@@ -724,7 +673,7 @@ h1, h2, h3, p { margin: 0; }
    -------------------------------------------------------------------------- */
 .capital {
   position: relative;
-  padding: clamp(7rem, 16vw, 12rem) var(--gutter);
+  padding: clamp(3rem, 6vw, 5rem) var(--gutter) clamp(5rem, 12vw, 9rem);
   text-align: center;
   overflow: hidden;
 }
@@ -763,7 +712,9 @@ h1, h2, h3, p { margin: 0; }
   font-size: clamp(2.6rem, 7.5vw, 7rem);
   line-height: 1;
   text-transform: uppercase;
+  text-wrap: balance;
 }
+.capital__hot { display: block; }
 .capital__statement .word { color: #3a2b23; }
 
 /* --------------------------------------------------------------------------
@@ -772,6 +723,7 @@ h1, h2, h3, p { margin: 0; }
 .visit { padding: 0 var(--gutter) clamp(4rem, 8vw, 7rem); }
 .visit__board {
   position: relative;
+  isolation: isolate;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
@@ -784,6 +736,17 @@ h1, h2, h3, p { margin: 0; }
     var(--red);
   overflow: hidden;
 }
+/* background decoration: big and on a diagonal behind the arrow, like the hot dogs on the sign */
+.visit__dog {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 68%;
+  width: clamp(18rem, 40vw, 38rem);
+  transform: translate(-50%, -50%) rotate(72deg);
+  filter: drop-shadow(0 18px 24px rgba(60, 8, 0, .45));
+  pointer-events: none;
+}
 .visit__script {
   font-family: var(--f-script);
   font-size: clamp(2.6rem, 7vw, 6rem);
@@ -791,24 +754,66 @@ h1, h2, h3, p { margin: 0; }
   color: #fff;
   text-shadow: 0 5px 0 var(--red-deep);
   transform: rotate(-4deg);
+  cursor: default;
+  transition: text-shadow .35s ease;
 }
-.visit__script span { font-size: 1.35em; }
+/* inner wrapper carries the hover move: GSAP owns the transform on .visit__script */
+.visit__lift {
+  display: block;
+  transition: transform .35s cubic-bezier(.34, 1.56, .64, 1);
+}
+.visit__lift span { font-size: 1.35em; }
+/* letters lift off the sign: the red extrusion deepens */
+.visit__script:hover .visit__lift { transform: translate(8px, -6px) scale(1.03); }
+.visit__script:hover {
+  text-shadow:
+    0 2px 0 var(--red-deep), 0 4px 0 var(--red-deep), 0 6px 0 var(--red-deep),
+    0 8px 0 var(--red-deep), 0 10px 0 var(--red-deep);
+}
+.visit__sign {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+/* runs long under the dog, out to the board's right edge; the logo sits on its end */
 .visit__arrow {
   display: inline-flex;
   align-items: center;
   gap: .75rem;
-  padding: .8rem 1.6rem .8rem 1rem;
+  flex: 0 1 50rem;
+  margin: 0 calc(-1 * clamp(2rem, 5vw, 4rem)) 1.2rem 0;
+  white-space: nowrap;
+  padding: .8rem clamp(10rem, 27vw, 23rem) .8rem 1rem;
   background: var(--mustard);
   color: var(--black);
   text-decoration: none;
   font-family: var(--f-display);
   font-size: clamp(1.4rem, 3.4vw, 2.6rem);
   text-transform: uppercase;
-  clip-path: polygon(6% 0, 100% 0, 100% 100%, 6% 100%, 0 50%);
+  clip-path: polygon(1.6em 0, 100% 0, 100% 100%, 1.6em 100%, 0 50%);
   padding-left: 2.2rem;
   box-shadow: 0 10px 0 #c58a00;
 }
-.visit__arrow svg { width: 1em; height: 1em; fill: var(--black); }
+.visit__arrow svg { flex-shrink: 0; width: 1em; height: 1em; fill: var(--black); }
+.visit__logo {
+  position: absolute;
+  z-index: 2;
+  right: clamp(.75rem, 2vw, 1.75rem);
+  bottom: clamp(.75rem, 2vw, 1.75rem);
+  width: clamp(11rem, 28vw, 24rem);
+  transform: rotate(-4deg);
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, .4));
+}
+/* not enough room beside the script: the sign drops to its own row */
+@media (max-width: 1280px) {
+  .visit__sign { flex-basis: 100%; }
+}
+@media (max-width: 720px) {
+  .visit__dog { top: 38%; left: 72%; width: 13rem; opacity: .55; }
+  .visit__arrow { flex: 1; gap: .5rem; padding-right: 8.5rem; font-size: .95rem; margin-bottom: .6rem; }
+  .visit__logo { width: 8.5rem; }
+}
 
 .visit__grid {
   display: grid;
@@ -863,14 +868,7 @@ h1, h2, h3, p { margin: 0; }
   text-align: center;
   border-top: 1px solid rgba(244, 221, 176, .08);
 }
-.footer__crown { width: 60px; height: 40px; }
-.footer__word {
-  font-family: var(--f-display);
-  font-size: clamp(2.4rem, 8vw, 5rem);
-  text-transform: uppercase;
-  line-height: 1;
-}
-.footer__word b { color: var(--red); font-weight: 400; }
+.footer__logo { width: clamp(200px, 30vw, 320px); margin: 0 auto; }
 .footer__script {
   font-family: var(--f-script);
   font-size: 1.6rem;
@@ -878,14 +876,20 @@ h1, h2, h3, p { margin: 0; }
   margin: .3rem 0 1.5rem;
 }
 .footer__meta, .footer__copy { font-size: .85rem; color: var(--muted); }
-.footer__meta a { text-decoration: none; }
+.footer__meta { display: flex; justify-content: center; gap: 1.25rem; }
+.footer__meta a { display: inline-flex; padding: .4rem; text-decoration: none; transition: color .2s; }
+.footer__meta a:hover { color: var(--mustard); }
+.footer__meta svg { width: 1.5rem; height: 1.5rem; fill: currentColor; }
 .footer__copy { margin-top: .4rem; opacity: .7; }
 
 /* --------------------------------------------------------------------------
    Reduced motion
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  .loader { display: none; }
-  body.is-loading { overflow: auto; }
+  body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: visible; }
   .capital__statement .word { color: var(--bun); }
+  .hero__crown { fill-opacity: 1; }
+  .visit__script { transition: none; }
+  .visit__lift { transition: none; }
+  .visit__script:hover .visit__lift { transform: none; }
 }

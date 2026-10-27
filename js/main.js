@@ -15,16 +15,21 @@
     lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.add((t) => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
-    lenis.stop();
   }
 
+  // Skip the section's top padding and land just below the fixed header
+  const header = $(".header");
   $$('a[href^="#"]').forEach((a) => {
     a.addEventListener("click", (e) => {
       const target = $(a.getAttribute("href"));
       if (!target) return;
       e.preventDefault();
-      if (lenis) lenis.scrollTo(target, { duration: 1.4 });
-      else target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+      const offset = parseFloat(getComputedStyle(target).paddingTop) - header.offsetHeight - 16;
+      if (lenis) lenis.scrollTo(target, { offset, duration: 1.4 });
+      else window.scrollTo({
+        top: target.getBoundingClientRect().top + window.scrollY + offset,
+        behavior: reduceMotion ? "auto" : "smooth",
+      });
     });
   });
 
@@ -96,16 +101,12 @@
     const embers = createEmbers($(".embers"));
     ScrollTrigger.create({
       trigger: ".hero",
-      start: "top top",
+      start: "top bottom", // "top top" puts scroll 0 at progress 0, which counts as inactive
       end: "bottom top",
       onToggle: (self) => (self.isActive ? embers.play() : embers.pause()),
     });
 
-    const intro = gsap.timeline();
-    intro.add(loader()).add(heroIntro(), "-=0.55");
-
-    heroScroll();
-    header();
+    heroIntro();
     ticker();
     splitHeadings();
     trinity();
@@ -117,77 +118,55 @@
     window.addEventListener("load", () => ScrollTrigger.refresh());
   }
 
-  /* --------------------------------------------------------------- Loader */
-  function loader() {
-    const tl = gsap.timeline();
-    gsap.set(".loader", { clipPath: "inset(0% 0% 0% 0%)" });
-    tl.from(".loader__crown path", { drawSVG: 0, duration: 1.1, ease: "power2.inOut", stagger: 0.2 })
-      .from(".loader__word", { yPercent: 60, autoAlpha: 0, duration: 0.6, ease: "power3.out" }, "-=0.5")
-      .to(".loader__crown", { fill: "#E8B23A", duration: 0.4 }, "-=0.2")
-      .to(".loader", { clipPath: "inset(0% 0% 100% 0%)", duration: 0.9, ease: "expo.inOut" }, "+=0.2")
-      .add(() => {
-        document.body.classList.remove("is-loading");
-        lenis && lenis.start();
-      }, "-=0.4")
-      .set(".loader", { display: "none" });
-    return tl;
-  }
-
   /* ----------------------------------------------------------------- Hero */
   function heroIntro() {
-    const split = SplitText.create(".hero__line", { type: "chars", charsClass: "char" });
-    const img = $(".hero__dog img");
-    gsap.set(img, { rotation: -90 });
-    const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+    const dogs = $$(".hero__hotdog");
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    document.body.classList.remove("is-loading");
 
-    tl.from(split.chars, {
-      yPercent: 120,
-      scaleY: 1.6,
-      autoAlpha: 0,
-      transformOrigin: "50% 100%",
-      duration: 1.1,
-      stagger: 0.045,
-      clearProps: "transform,opacity,visibility",
-    })
-      .from(".hero__script", { autoAlpha: 0, y: 40, rotation: -14, duration: 0.9, ease: "back.out(2)" }, 0.35)
-      .from(".hero__squiggle path", { drawSVG: 0, duration: 0.9, ease: "power2.inOut" }, 0.7)
-      .from(img, { y: -window.innerHeight, rotation: -150, scale: 0.6, duration: 1.3, ease: "back.out(1.3)" }, 0.25)
-      .from(".header", { autoAlpha: 0, duration: 0.8 }, 0.8)
+    // dogs rise from behind the logo and fan out to their CSS rotation
+    tl.from(".hero__logo", { autoAlpha: 0, scale: 0.85, y: 30, duration: 0.7, ease: "back.out(1.6)" })
+      .from(dogs, { yPercent: 60, rotation: 0, autoAlpha: 0, duration: 0.8, stagger: 0.1, ease: "back.out(1.7)" }, 0.3)
+      // then a gold crown draws itself on top of each one
+      .from(".hero__crown path", { drawSVG: 0, duration: 0.7, stagger: 0.08, ease: "power2.inOut" }, 0.9)
+      .to(".hero__crown", { fillOpacity: 1, duration: 0.35, stagger: 0.08 }, 1.45)
+      .from(".hero__crown", { scale: 1.25, duration: 0.5, stagger: 0.08, ease: "back.out(3)" }, 1.45)
+      .from(".hero__script", { autoAlpha: 0, y: 40, rotation: -14, duration: 0.9, ease: "back.out(2)" }, 0.7)
+      .from(".header", { autoAlpha: 0, duration: 0.8 }, 0.9)
       .add(() => {
-        gsap.to(img, { y: -14, rotation: -87, duration: 2.2, ease: "sine.inOut", yoyo: true, repeat: -1 });
+        dogs.forEach((dog, i) =>
+          gsap.to(dog, { y: -8, duration: 2 + i * 0.3, ease: "sine.inOut", yoyo: true, repeat: -1, delay: i * 0.25 })
+        );
+        // built after the intro so the scrub records the settled fan, not the intro's start values
+        heroScroll();
       });
 
-    // mouse parallax on the dog wrapper (vertical only, so it stays centred under B&S)
+    // mouse parallax: the dogs move a bit more than the logo for depth
     if (window.matchMedia("(pointer: fine)").matches) {
-      const dog = $(".hero__dog");
-      const yTo = gsap.quickTo(dog, "y", { duration: 0.8, ease: "power3" });
+      const brandY = gsap.quickTo(".hero__brand", "y", { duration: 0.8, ease: "power3" });
+      const dogsX = gsap.quickTo(".hero__dogs", "x", { duration: 0.8, ease: "power3" });
       $(".hero").addEventListener("pointermove", (e) => {
-        yTo((e.clientY / window.innerHeight - 0.5) * 30);
+        const dx = e.clientX / window.innerWidth - 0.5;
+        const dy = e.clientY / window.innerHeight - 0.5;
+        brandY(dy * 20);
+        dogsX(dx * 16);
       });
     }
     return tl;
   }
 
+  // the fan opens up as the hero scrolls away
   function heroScroll() {
     const tl = gsap.timeline({
       scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.6 },
     });
-    tl.to(".hero__dog", { yPercent: 40, scale: 1.35, rotation: 14, ease: "none" }, 0)
-      .to(".hero__line--a", { xPercent: -18, autoAlpha: 0.2, ease: "none" }, 0)
-      .to(".hero__line--b", { xPercent: 18, autoAlpha: 0.2, ease: "none" }, 0)
-      .to(".hero__script, .hero__squiggle", { yPercent: -120, autoAlpha: 0, ease: "none" }, 0)
+    tl.to(".hero__logo", { scale: 0.85, yPercent: -10, autoAlpha: 0.25, ease: "none" }, 0)
+      .to(".hero__hotdog--l", { xPercent: -40, rotation: -26, ease: "none" }, 0)
+      .to(".hero__hotdog--r", { xPercent: 40, rotation: 26, ease: "none" }, 0)
+      .to(".hero__hotdog--c", { yPercent: -30, ease: "none" }, 0)
+      .to(".hero__dogs", { autoAlpha: 0.25, ease: "none" }, 0)
+      .to(".hero__script", { yPercent: -120, autoAlpha: 0, ease: "none" }, 0)
       .to(".hero__glow", { scale: 1.3, autoAlpha: 0.6, ease: "none" }, 0);
-  }
-
-  /* --------------------------------------------------------------- Header */
-  function header() {
-    const hideHeader = gsap.to(".header", { yPercent: -110, paused: true, duration: 0.35, ease: "power2.out" });
-    ScrollTrigger.create({
-      start: "top -120",
-      end: "max",
-      onUpdate: (self) => (self.direction === 1 ? hideHeader.play() : hideHeader.reverse()),
-      onLeaveBack: () => hideHeader.reverse(),
-    });
   }
 
   /* --------------------------------------------------------------- Ticker */
@@ -239,21 +218,9 @@
     const mm = gsap.matchMedia();
     const panels = gsap.utils.toArray(".panel");
 
+    // side by side, so they share one trigger and enter staggered
     mm.add("(min-width: 900px)", () => {
-      gsap.set(panels, { filter: "brightness(1)" });
-      gsap.set(panels.slice(1), { yPercent: 115, rotation: 5 });
-      const tl = gsap.timeline({
-        defaults: { ease: "none" },
-        scrollTrigger: { trigger: ".trinity__pin", start: "top top", end: "+=220%", pin: true, scrub: 1 },
-      });
-      tl.from(panels[0].querySelectorAll(".panel__icon path"), { drawSVG: 0, duration: 0.4 });
-      panels.slice(1).forEach((panel, i) => {
-        tl.to(panel, { yPercent: 0, rotation: 0, duration: 1 })
-          .to(panels[i], { scale: 0.9, filter: "brightness(.45)", duration: 1 }, "<")
-          .from(panel.querySelectorAll(".panel__icon path, .panel__icon rect"), { drawSVG: 0, duration: 0.4 }, "-=0.3")
-          .from(panel.querySelector(".panel__num"), { yPercent: 40, autoAlpha: 0, duration: 0.5 }, "<");
-      });
-      tl.to({}, { duration: 0.3 }); // short hold on the last panel
+      gsap.from(panels, { y: 80, rotation: 3, autoAlpha: 0, duration: 0.9, stagger: 0.12, ease: "power3.out", scrollTrigger: { trigger: ".trinity__pin", start: "top 80%" } });
     });
 
     mm.add("(max-width: 899px)", () => {
@@ -334,7 +301,6 @@
 
     if (!$(".reel[data-reel]")) return false;
     $(".stand").hidden = false;
-    $(".nav__stand").hidden = false;
     return true;
   }
 
@@ -402,7 +368,7 @@
       onSplit(self) {
         const hot = self.words.slice(-3); // "wear the crown."
         const tl = gsap.timeline({
-          scrollTrigger: { trigger: ".capital__statement", start: "top 80%", end: "bottom 45%", scrub: true },
+          scrollTrigger: { trigger: ".capital__statement", start: "top bottom", end: "bottom 90%", scrub: true },
         });
         tl.to(self.words, { color: "#F4DDB0", stagger: 0.1, ease: "none" }).to(hot, { color: "#FFC21A", textShadow: "0 0 30px rgba(255,106,19,.8)", stagger: 0.1, ease: "none" }, "-=0.2");
         return tl;
@@ -415,7 +381,9 @@
     const tl = gsap.timeline({ scrollTrigger: { trigger: ".visit", start: "top 75%" } });
     tl.from(".visit__board", { clipPath: "inset(0% 0% 100% 0%)", duration: 1, ease: "expo.inOut" })
       .from(".visit__script", { autoAlpha: 0, y: 50, rotation: -12, duration: 0.9, ease: "back.out(1.8)" }, "-=0.4")
+      .from(".visit__dog", { xPercent: 40, autoAlpha: 0, duration: 1, ease: "power3.out" }, "<")
       .from(".visit__arrow", { xPercent: 120, autoAlpha: 0, duration: 1, ease: "power4.out" }, "-=0.6")
+      .from(".visit__logo", { scale: 0.6, autoAlpha: 0, duration: 0.6, ease: "back.out(2)" }, "-=0.4")
       .to(".visit__arrow svg", { x: -8, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
 
     gsap.from(".visit__info > *, .visit__map", {

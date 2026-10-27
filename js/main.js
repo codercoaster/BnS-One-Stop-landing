@@ -36,7 +36,7 @@
   /* --------------------------------------------------------------- Embers */
   function createEmbers(canvas) {
     const ctx = canvas.getContext("2d");
-    const colors = ["255,194,26", "255,106,19", "237,47,14"];
+    const colors = ["255,194,26", "255,90,20", "248,8,8"];
     let w, h, dpr, parts = [], running = true;
 
     const spawn = (anywhere) => ({
@@ -247,6 +247,7 @@
       [".menu__deco--a", -120, 18],
       [".menu__deco--b", -220, -16],
       [".menu__deco--c", -160, 10],
+      [".menu__deco--d", -190, -14],
     ].forEach(([sel, y, rot]) =>
       gsap.to(sel, { y, rotation: `+=${rot}`, ease: "none", scrollTrigger: { trigger: ".menu", start: "top bottom", end: "bottom top", scrub: true } })
     );
@@ -370,7 +371,7 @@
         const tl = gsap.timeline({
           scrollTrigger: { trigger: ".capital__statement", start: "top bottom", end: "bottom 90%", scrub: true },
         });
-        tl.to(self.words, { color: "#F4DDB0", stagger: 0.1, ease: "none" }).to(hot, { color: "#FFC21A", textShadow: "0 0 30px rgba(255,106,19,.8)", stagger: 0.1, ease: "none" }, "-=0.2");
+        tl.to(self.words, { color: "#F4DDB0", stagger: 0.1, ease: "none" }).to(hot, { color: "#FFC21A", textShadow: "0 0 30px rgba(255,90,20,.8)", stagger: 0.1, ease: "none" }, "-=0.2");
         return tl;
       },
     });

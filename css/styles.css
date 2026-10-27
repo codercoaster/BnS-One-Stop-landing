@@ -6,9 +6,9 @@
   --black: #0A0A0A;
   --char: #161210;
   --char-2: #221a16;
-  --red: #ED2F0E;
-  --red-deep: #B81F06;
-  --ember: #FF6A13;
+  --red: #F80808;
+  --red-deep: #B00000;
+  --ember: #FF5A14;
   --mustard: #FFC21A;
   --gold: #E8B23A;
   --bun: #F4DDB0;
@@ -71,7 +71,7 @@ h1, h2, h3, p { margin: 0; }
   font-size: .85rem;
   letter-spacing: .18em;
   text-transform: uppercase;
-  color: var(--ember);
+  color: var(--red);
   margin-bottom: 1rem;
 }
 
@@ -98,9 +98,9 @@ h1, h2, h3, p { margin: 0; }
 .btn--fire {
   background: var(--fire-x);
   color: var(--black);
-  box-shadow: 0 0 0 0 rgba(255, 106, 19, .0), 0 10px 30px -10px rgba(237, 47, 14, .8);
+  box-shadow: 0 0 0 0 rgba(255, 90, 20, .0), 0 10px 30px -10px rgba(248, 8, 8, .8);
 }
-.btn--fire:hover { transform: translateY(-2px); box-shadow: 0 0 0 4px rgba(255, 194, 26, .2), 0 16px 40px -10px rgba(237, 47, 14, 1); }
+.btn--fire:hover { transform: translateY(-2px); box-shadow: 0 0 0 4px rgba(255, 194, 26, .2), 0 16px 40px -10px rgba(248, 8, 8, 1); }
 .btn--ghost {
   border: 2px solid rgba(244, 221, 176, .35);
   color: var(--bun);
@@ -122,7 +122,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   align-items: center;
   gap: 1.5rem;
   padding: 14px var(--gutter);
-  background: linear-gradient(180deg, rgba(10, 10, 10, .85), rgba(10, 10, 10, 0));
+  background: linear-gradient(180deg, rgba(10, 10, 10, .88), rgba(10, 10, 10, .02));
 }
 .brand {
   display: flex;
@@ -180,7 +180,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   inset: auto -20% -40% -20%;
   height: 90%;
   z-index: -2;
-  background: radial-gradient(ellipse at 50% 100%, rgba(237, 47, 14, .55), rgba(255, 106, 19, .18) 40%, transparent 70%);
+  background: radial-gradient(ellipse at 50% 100%, rgba(248, 8, 8, .55), rgba(255, 90, 20, .18) 40%, transparent 70%);
 }
 .hero__stage {
   position: relative;
@@ -189,7 +189,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   place-items: center;
   align-content: center;
   /* bottom room: the ticker overlaps the end of the hero */
-  padding: 108px var(--gutter) 5rem;
+  padding: 108px var(--gutter) calc(3.5rem + clamp(3rem, 6vw, 5rem));
   text-align: center;
 }
 .hero__brand {
@@ -204,7 +204,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   position: relative;
   z-index: 1;
   width: 100%;
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, .6)) drop-shadow(0 0 50px rgba(237, 47, 14, .35));
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, .6)) drop-shadow(0 0 50px rgba(248, 8, 8, .35));
 }
 /* three dogs fanned out behind the logo, like a hand of cards */
 .hero__dogs {
@@ -222,17 +222,16 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
 }
 .hero__hotdog img {
   width: 100%;
-  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, .6)) drop-shadow(0 0 30px rgba(255, 106, 19, .3));
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, .6)) drop-shadow(0 0 30px rgba(255, 90, 20, .3));
 }
 .hero__hotdog--l { left: -19.5%; bottom: 28%; transform: rotate(-14deg); }
 .hero__hotdog--r { left: 70.5%; bottom: 28%; transform: rotate(14deg); }
 /* gold crown drawn on top of each dog */
 .hero__crown {
   position: absolute;
-  left: 50%;
+  left: 22%;
   bottom: 98%;
   width: 56%;
-  translate: -50% 0;
   transform-origin: 50% 100%;
   overflow: visible;
   fill: url(#goldGrad);
@@ -243,10 +242,11 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   stroke-linecap: round;
   filter: drop-shadow(0 0 12px rgba(232, 178, 58, .6));
 }
-/* centred over each bun's tip; side crowns tilt with their dog, nudged inward so they sit on the tip */
-.hero__hotdog--l .hero__crown { left: 50%; width: 52%; }
-.hero__hotdog--c .hero__crown { left: 50.4%; }
-.hero__hotdog--r .hero__crown { left: 53%; width: 52%; }
+/* centred over each bun's tip: left edge = tip centre (measured from the PNGs) − half the crown width.
+   No CSS translate here, GSAP owns the crown's transform */
+.hero__hotdog--l .hero__crown { left: 23%; width: 52%; }
+.hero__hotdog--c .hero__crown { left: 22%; }
+.hero__hotdog--r .hero__crown { left: 28%; width: 52%; }
 .hero__script {
   position: relative;
   z-index: 3;
@@ -256,12 +256,18 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   line-height: 1.15;
   color: #fff;
   transform: rotate(-5deg);
-  text-shadow: 0 4px 0 var(--red-deep), 0 0 30px rgba(237, 47, 14, .6);
+  text-shadow: 0 4px 0 var(--red-deep), 0 0 30px rgba(248, 8, 8, .6);
 }
 
 @media (max-width: 720px) {
-  .hero__stage { padding-top: 104px; }
-  .hero__brand { width: 66vw; }
+  /* size to content instead of filling the tall phone viewport */
+  .hero { min-height: auto; }
+  .hero__stage { padding: 96px var(--gutter) calc(3.5rem + clamp(3rem, 6vw, 5rem)); }
+  .hero__brand {
+    width: 66vw;
+    /* tied to width: the crowned dogs scale with the logo, not the viewport height */
+    margin-top: 44vw;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -276,8 +282,8 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   border-block: 3px solid var(--mustard);
   transform: rotate(-2deg);
   /* rises over the bottom of the hero so its gradient runs under the ticker */
-  margin: -4rem -2vw 1.5rem;
-  box-shadow: 0 20px 60px -20px rgba(237, 47, 14, .7);
+  margin: -3.5rem -2vw 1.5rem;
+  box-shadow: 0 20px 60px -20px rgba(248, 8, 8, .7);
 }
 .ticker__track {
   display: flex;
@@ -298,7 +304,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
 /* --------------------------------------------------------------------------
    Trinity
    -------------------------------------------------------------------------- */
-.trinity { position: relative; padding-top: clamp(5rem, 12vw, 9rem); }
+.trinity { position: relative; padding-top: clamp(3.5rem, 9vw, 6.5rem); }
 .trinity__intro {
   padding: 0 var(--gutter) clamp(3rem, 6vw, 5rem);
   max-width: 1400px;
@@ -424,6 +430,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
 .menu__deco--a { top: 8%; right: -2vw; transform: rotate(24deg); }
 .menu__deco--b { top: 46%; left: -4vw; transform: rotate(-30deg); }
 .menu__deco--c { bottom: -3%; left: -3vw; width: clamp(180px, 20vw, 320px); transform: rotate(-8deg); }
+.menu__deco--d { top: 68%; right: -3vw; transform: rotate(28deg); }
 
 .menu__board {
   position: relative;
@@ -435,7 +442,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   border: 2px solid rgba(232, 178, 58, .25);
   border-radius: var(--radius);
   background:
-    radial-gradient(ellipse at 20% 0%, rgba(237, 47, 14, .14), transparent 55%),
+    radial-gradient(ellipse at 20% 0%, rgba(248, 8, 8, .14), transparent 55%),
     radial-gradient(ellipse at 100% 100%, rgba(255, 194, 26, .08), transparent 50%),
     var(--char);
   box-shadow: 0 40px 80px -40px rgba(0, 0, 0, .9);
@@ -498,7 +505,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
     radial-gradient(circle at 90% 10%, rgba(255, 194, 26, .3), transparent 45%),
     var(--red);
   color: #fff;
-  box-shadow: 0 20px 50px -20px rgba(237, 47, 14, .8);
+  box-shadow: 0 20px 50px -20px rgba(248, 8, 8, .8);
 }
 .combo__crown {
   position: absolute;
@@ -547,7 +554,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
 }
 @media (max-width: 899px) {
   .menu__deco { opacity: .18; }
-  .menu__deco--b, .menu__deco--c { display: none; }
+  .menu__deco--b, .menu__deco--c, .menu__deco--d { display: none; }
 }
 
 /* --------------------------------------------------------------------------
@@ -574,7 +581,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   display: grid;
   gap: .75rem;
   align-content: start;
-  width: min(72vw, 320px);
+  width: min(50vw, 210px);
   scroll-snap-align: center;
   text-decoration: none;
 }
@@ -622,7 +629,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   background:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='%230A0A0A'/%3E%3C/svg%3E") center / 34px no-repeat,
     var(--fire-x);
-  box-shadow: 0 0 0 8px rgba(255, 106, 19, .2), 0 14px 40px -10px rgba(237, 47, 14, .9);
+  box-shadow: 0 0 0 8px rgba(255, 90, 20, .2), 0 14px 40px -10px rgba(248, 8, 8, .9);
   transition: transform .3s ease;
 }
 .reel__play:hover::before { transform: scale(1.08); }
@@ -666,6 +673,13 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   .stand__head { width: clamp(340px, 34vw, 560px); }
   .reel { width: auto; }
   .reel__media { height: min(70svh, 640px); }
+}
+@media (max-width: 899px) {
+  .menu { padding-bottom: 3rem; }
+  .stand { padding: 1.5rem 0 0; }
+  .reel__play::before { width: 60px; height: 60px; background-size: 28px, auto; }
+  .reel__crown { width: 72px; height: 48px; }
+  .reel__cta-text { font-size: 2rem; }
 }
 
 /* --------------------------------------------------------------------------
@@ -836,11 +850,15 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   font-size: .75rem;
   letter-spacing: .15em;
   text-transform: uppercase;
-  color: var(--ember);
+  color: var(--red);
 }
 .visit dd { margin: .2rem 0 0; font-size: 1.1rem; overflow-wrap: anywhere; }
-.visit dd a { text-decoration: none; border-bottom: 1px solid rgba(255, 194, 26, .4); }
-.visit dd a:hover { color: var(--mustard); }
+.visit dd a { text-decoration: none; transition: color .2s; }
+.visit dd a:hover { color: var(--red); }
+@media (max-width: 720px) {
+  .visit dd { font-size: min(1.1rem, 3.8vw); }
+  .visit__note { display: none; }
+}
 .visit__ctas { display: flex; flex-wrap: wrap; gap: .75rem; }
 .visit__map {
   min-height: 320px;
@@ -872,7 +890,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
 .footer__script {
   font-family: var(--f-script);
   font-size: 1.6rem;
-  color: var(--mustard);
+  color: #fff;
   margin: .3rem 0 1.5rem;
 }
 .footer__meta, .footer__copy { font-size: .85rem; color: var(--muted); }

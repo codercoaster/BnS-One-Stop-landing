@@ -33,6 +33,22 @@
     });
   });
 
+  /* ---------------------------------------------------------- Header hide */
+  // hides while scrolling either way, comes back once scrolling pauses or near the top
+  function autoHideHeader() {
+    let idle;
+    ScrollTrigger.create({
+      start: 0,
+      end: "max",
+      onUpdate(self) {
+        const hide = self.scroll() > header.offsetHeight;
+        header.classList.toggle("is-hidden", hide);
+        clearTimeout(idle);
+        if (hide) idle = setTimeout(() => header.classList.remove("is-hidden"), 400);
+      },
+    });
+  }
+
   /* --------------------------------------------------------------- Embers */
   function createEmbers(canvas) {
     const ctx = canvas.getContext("2d");
@@ -87,6 +103,7 @@
   }
 
   setupReels();
+  autoHideHeader();
 
   /* ------------------------------------------------------- Reduced motion */
   if (reduceMotion) {
@@ -95,7 +112,11 @@
   }
 
   /* ---------------------------------------------------------------- Init */
-  document.fonts.ready.then(init);
+  // wait for the hero art too, so the three dogs rise together instead of popping in as each one arrives;
+  // capped so a slow image can't hold the intro back forever
+  const heroArt = Promise.all($$(".hero__brand img").map((img) => img.decode().catch(() => {})));
+  const heroReady = Promise.race([heroArt, new Promise((resolve) => setTimeout(resolve, 3000))]);
+  Promise.all([document.fonts.ready, heroReady]).then(init);
 
   function init() {
     const embers = createEmbers($(".embers"));
@@ -175,19 +196,8 @@
     const half = track.innerHTML.repeat(3);
     track.innerHTML = half + half;
 
-    const loop = gsap.fromTo(track, { xPercent: -50 }, { xPercent: 0, duration: 40, ease: "none", repeat: -1 });
-
-    // scrolling only speeds it up, it always runs to the right
-    let boostTl;
-    ScrollTrigger.create({
-      onUpdate(self) {
-        const boost = 1 + Math.min(Math.abs(self.getVelocity()) / 250, 6);
-        boostTl && boostTl.kill();
-        boostTl = gsap.timeline()
-          .to(loop, { timeScale: boost, duration: 0.2 })
-          .to(loop, { timeScale: 1, duration: 0.8 }, "+=0.15");
-      },
-    });
+    // runs to the right at a constant speed
+    gsap.fromTo(track, { xPercent: -50 }, { xPercent: 0, duration: 40, ease: "none", repeat: -1 });
   }
 
   /* ------------------------------------------------------ Split headings */
@@ -257,7 +267,7 @@
     const ig = url.match(/instagram\.com\/(reel|reels|p)\/([\w-]+)/);
     if (ig) return { src: `https://www.instagram.com/${ig[1] === "p" ? "p" : "reel"}/${ig[2]}/embed`, site: "Instagram" };
     if (/facebook\.com|fb\.watch/.test(url)) {
-      return { src: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&width=320`, site: "Facebook" };
+      return { src: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false`, site: "Facebook" };
     }
     return null;
   }

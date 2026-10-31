@@ -122,7 +122,31 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   align-items: center;
   gap: 1.5rem;
   padding: 14px var(--gutter);
-  background: linear-gradient(180deg, rgba(10, 10, 10, .88), rgba(10, 10, 10, .02));
+  transition: transform .6s ease;
+}
+/* -175% so the gradient below the bar leaves the screen too; hides faster than it returns */
+.header.is-hidden { transform: translateY(-175%); transition-duration: .35s; }
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 175%;
+  z-index: -1;
+  pointer-events: none;
+  /* eased (scrim) stops: fades out without a visible bottom edge */
+  background: linear-gradient(180deg,
+    rgba(10, 10, 10, .85) 0%,
+    rgba(10, 10, 10, .63) 19%,
+    rgba(10, 10, 10, .46) 34%,
+    rgba(10, 10, 10, .33) 47%,
+    rgba(10, 10, 10, .24) 56.5%,
+    rgba(10, 10, 10, .17) 65%,
+    rgba(10, 10, 10, .10) 73%,
+    rgba(10, 10, 10, .065) 80.2%,
+    rgba(10, 10, 10, .04) 86.1%,
+    rgba(10, 10, 10, .026) 91%,
+    rgba(10, 10, 10, .01) 95.2%,
+    rgba(10, 10, 10, 0) 100%);
 }
 .brand {
   display: flex;
@@ -601,9 +625,10 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   width: 100%;
   height: 100%;
   border: 0;
+  transform: scale(1.06); /* overscan: hides FB's letterbox edges, like object-fit: cover */
 }
 .reel__play {
-  --play: 96px;
+  --play: 112px;
   --play-nudge: 6px; /* FB's button sits slightly below the iframe's center */
   position: absolute;
   inset: 0;
@@ -629,7 +654,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   margin: calc(var(--play) / -2) 0 0 calc(var(--play) / -2);
   border-radius: 50%;
   background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='%230A0A0A'/%3E%3C/svg%3E") center / 42px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='%230A0A0A'/%3E%3C/svg%3E") center / 48px no-repeat,
     var(--fire-x);
   box-shadow: 0 0 0 8px rgba(255, 90, 20, .2), 0 14px 40px -10px rgba(248, 8, 8, .9);
   transition: transform .3s ease;
@@ -650,6 +675,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   text-transform: uppercase;
   color: var(--muted);
   text-decoration: none;
+  white-space: nowrap;
 }
 .reel__link:hover { color: var(--mustard); }
 
@@ -686,8 +712,8 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
 @media (max-width: 899px) {
   .menu { padding-bottom: 3rem; }
   .stand { padding: 1.5rem 0 0; }
-  .reel__play { --play: 80px; }
-  .reel__play::before { background-size: 36px, auto; }
+  .reel__play { --play: 96px; }
+  .reel__play::before { background-size: 42px, auto; }
   .reel__crown { width: 72px; height: 48px; }
   .reel__cta-text { font-size: 2rem; }
 }
@@ -910,6 +936,9 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
 .footer__meta a:hover { color: var(--mustard); }
 .footer__meta svg { width: 1.5rem; height: 1.5rem; fill: currentColor; }
 .footer__copy { margin-top: .4rem; opacity: .7; }
+@media (max-width: 720px) {
+  .footer { border-top: none; padding-top: 0; }
+}
 
 /* --------------------------------------------------------------------------
    Reduced motion
@@ -918,6 +947,7 @@ body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: hidden; 
   body.is-loading :is(.header, .hero__brand, .hero__script) { visibility: visible; }
   .capital__statement .word { color: var(--bun); }
   .hero__crown { fill-opacity: 1; }
+  .header { transition: none; }
   .visit__script { transition: none; }
   .visit__lift { transition: none; }
   .visit__script:hover .visit__lift { transform: none; }
